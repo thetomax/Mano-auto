@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="lt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AutoSkelbimai</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #1a73e8;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lang-switcher button {
+      margin-left: 5px;
+      background: white;
+      color: #1a73e8;
+      border: none;
+      padding: 0.4rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .container {
+      padding: 1rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    .card {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    .form-section, .filters {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #1a73e8;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 data-i18n="title">Automobilių skelbimai</h1>
+    <div class="lang-switcher">
+      <button onclick="setLang('lt')">LT</button>
+      <button onclick="setLang('en')">EN</button>
+      <button onclick="setLang('ru')">RU</button>
+    </div>
+  </header>  <div class="container">
+    <div class="filters">
+      <h3 data-i18n="filter">Filtruoti</h3>
+      <input id="filter-make" placeholder="Markė" />
+      <input id="filter-model" placeholder="Modelis" />
+      <input id="filter-price" placeholder="Maks. kaina" type="number" />
+      <button onclick="renderAds()" data-i18n="apply_filters">Taikyti filtrus</button>
+    </div><div class="form-section">
+  <h3 data-i18n="new_ad">Naujas skelbimas</h3>
+  <input id="make" placeholder="Markė" />
+  <input id="model" placeholder="Modelis" />
+  <input id="year" placeholder="Metai" type="number" />
+  <input id="fuel" placeholder="Kuro tipas" />
+  <input id="gearbox" placeholder="Pavarų dėžė" />
+  <input id="price" placeholder="Kaina (€)" type="number" />
+  <input id="city" placeholder="Miestas" />
+  <input id="photo" placeholder="Nuotraukos nuoroda (URL)" />
+  <textarea id="description" placeholder="Aprašymas"></textarea>
+  <button onclick="addAd()" data-i18n="post_ad">Įkelti skelbimą</button>
+</div>
+
+<div id="ads"></div>
+
+  </div>  <script>
+    let ads = JSON.parse(localStorage.getItem('ads')) || [];
